@@ -1,78 +1,184 @@
 # Luxury Beauty Cosmetics Pop-Up Events KPI 2025 Analysis (R)
 
 ## Overview
-This repository showcases statistical testing and regression analysis in **R** using a **synthetic Kaggle dataset** themed around luxury beauty pop-up events (2025). The project demonstrates how to evaluate business KPIs (footfall, sell-through, units sold, lease length, etc.) using hypothesis tests and models that employers commonly expect in analytics roles.
 
-> Data note: The dataset is **synthetic** (no real customer/company information).
+This project analyzes performance drivers of luxury beauty pop-up events using statistical testing and regression modeling in **R**. The dataset (synthetic, sourced from Kaggle) simulates 2025 KPI data across global regions, brands, retail environments, and event formats.
 
-## Skills Demonstrated 
-- ## R programming, hypothesis testing, assumption checking, modeling and interpretation
-  
-## Business Goal
-Pop-up events are costly and operationally complex. This analysis explores:
-- Whether KPIs differ across **regions**, **brands**, **event types**, and **location types**
-- Whether operational levers (like **footfall**, **lease length**, **price**) predict outcomes like **sell-through %** and **units sold**
+The objective was to determine whether structural factors (region, brand, location type, event format) or operational variables (footfall, lease length, price) meaningfully influence key outcomes such as:
 
-## Key Questions Answered (What the scripts test)
-- **Do regions differ in average daily footfall?** (normality checks + non-parametric comparison)
-- **Do Latin America vs North America differ in lease length days?** (variance checks + Welch t-test)
-- **Is Europe’s units sold higher/lower than the overall mean?** (one-sample z-statistic + p-value)
-- **Are location type and event type associated?** (Chi-square test of independence)
-- **Do footfall/price/lease length predict sell-through or units sold?** (linear & multiple regression + VIF)
-- **Do region and brand jointly impact footfall (including interaction)?** (two-way ANOVA + Tukey HSD)
+- Average daily footfall  
+- Sell-through percentage  
+- Units sold  
+- Lease length  
 
-## Files in This Repo
-- `OneWayANOVA.R`
-  - Filters 3 regions (Asia-Pacific, Europe, North America)
-  - Runs **Shapiro-Wilk** for normality on `avg_daily_footfall`
-  - Applies **log transform** attempt
-  - Runs **Levene’s test** for variance equality
-  - Uses **Kruskal-Wallis** (non-parametric alternative to one-way ANOVA)
-  - Creates **boxplot** comparing footfall across regions
-<img width="950" height="760" alt="2df8fb44-08a4-4d30-bcb3-f4c131a384c9" src="https://github.com/user-attachments/assets/b9ac8d2f-cc1a-431a-90f7-da00e54ea2e5" />
+> **Note:** The dataset is synthetic and used solely for analytical demonstration.
 
-- `TwoWayANOVA.R`
-  - Cleans brand encoding for **Estée Lauder**
-  - Filters to 3 regions + 3 brands (Hourglass, Estée Lauder, Tom Ford Beauty)
-  - Uses `avg_daily_footfall_log` and runs:
-    - **Shapiro-Wilk**
-    - **Levene’s test**
-    - **Two-way ANOVA** with interaction: `region * brand`
-    - **Tukey HSD** post-hoc
-  - Produces summary table (mean/sd/n), boxplots, and interaction plot
+---
 
-- `TwoTailTTest.R`
-  - Compares **lease_length_days** between **Latin America vs North America**
-  - Runs:
-    - Shapiro-Wilk per group
-    - Log transform attempt
-    - Levene’s test + F test (`var.test`)
-    - **Welch two-sample t-test**: `t.test(lease_length_days ~ region)`
+## Executive Summary
 
-- `OneTailZTest.R`
-  - Focuses on **Europe** sample `units_sold`
-  - Runs Shapiro-Wilk, histogram + density curve, skewness/kurtosis
-  - Computes a **z-statistic** comparing Europe mean vs overall mean and calculates a p-value using `pnorm()`
+This analysis evaluated whether geography, brand identity, retail setting, or operational variables significantly influence pop-up event performance.
 
-- `ChiSquare.R`
-  - Tests whether **location_type** and **event_type** are associated
-  - Builds a 3x3 contingency table (selected levels)
-  - Runs **Chi-square test of independence**
+**Key findings:**
 
-- `LinearRegression.R`
-  - Runs regression models such as:
-    - `sell_through_pct ~ avg_daily_footfall`
-    - `sell_through_pct ~ lease_length_days`
-    - `units_sold ~ price_usd + avg_daily_footfall`
-    - `sell_through_pct ~ avg_daily_footfall + lease_length_days + price_usd`
-  - Generates scatterplots with regression line
-  - Checks multicollinearity using **VIF**
+- No statistically significant differences in footfall across regions.
+- No significant region × brand interaction effects.
+- Lease length does not differ meaningfully between Latin America and North America.
+- Event type distribution is independent of retail location type.
+- Average daily footfall is a statistically significant predictor of sell-through percentage — but the effect size is extremely small (R² ≈ 0.004).
+- Price and lease length do not significantly predict sell-through or units sold.
+
+Overall, structural variables do not appear to be primary drivers of KPI variation. Performance differences likely stem from micro-level execution factors rather than geography or brand identity alone.
+
+---
+
+## Skills Demonstrated
+
+- R programming (tidyverse, ggplot2, car)
+- Assumption testing (Shapiro-Wilk, Levene’s Test)
+- Parametric and non-parametric hypothesis testing
+- One-sample Z-test
+- Welch two-sample t-test
+- One-way and Two-way ANOVA with interaction effects
+- Chi-square test of independence
+- Linear and multiple regression modeling
+- Model diagnostics (VIF, residual interpretation)
+- Translating statistical output into business insights
+
+---
+
+## Business Questions Investigated
+
+1. Do regions differ in average daily footfall?
+2. Does region and brand jointly impact footfall?
+3. Does lease duration differ between Latin America and North America?
+4. Is Europe’s average units sold different from the global mean?
+5. Is event format associated with retail location type?
+6. Do footfall, lease length, or price predict sell-through or units sold?
+
+---
 
 ## Key Findings
-> Note: data is synthetic and small (2,133 rows). Results may not be significant, but the testing is accurate and can be applied to real business data. 
-- A Kruskal-Wallis test found no statistically significant differences in average daily footfall across Asia-Pacific, Europe, and North America (χ²(2) = 2.81, p = 0.245). Variance homogeneity was confirmed via Levene’s test (p = 0.854). Results suggest regional location alone does not significantly impact foot traffic volume.
-- A two-way ANOVA examining region and brand effects on log-transformed average daily footfall found no statistically significant main effects for region (F(2,158) = 0.341, p = 0.711) or brand (F(2,158) = 0.152, p = 0.859), nor a significant interaction effect (F(4,158) = 1.286, p = 0.278). Tukey post-hoc comparisons confirmed no meaningful pairwise differences. These findings suggest that foot traffic volume is not significantly driven by geography or brand identity alone.
-- A Welch two-sample t-test comparing lease length days between Latin America and North America found no statistically significant difference (t(821.8) = 1.02, p = 0.306). Mean lease duration was 46.2 days in Latin America and 44.4 days in North America, suggesting standardized lease strategies across regions.
-- A one-sample z-test comparing Europe’s mean units sold to the overall mean found no statistically significant difference (z = 0.43, p = 0.666). Europe’s performance appears consistent with global averages.
-- A Chi-square test of independence found no significant association between location type and event format (χ²(4) = 3.03, p = 0.552). Event distribution appears balanced across Airport Duty-Free, High-Street, and Luxury Mall settings, suggesting standardized deployment strategies.
-- A simple linear regression found that average daily footfall significantly predicts sell-through percentage (β = 0.0017, p = 0.0036); however, the effect size was very small (R² = 0.004), indicating limited practical impact. Lease length and price were not significant predictors of sell-through or units sold. Overall, operational variables explained minimal variation in performance metrics.
+
+### Regional Footfall Differences
+
+A Kruskal-Wallis test found no statistically significant differences in average daily footfall across Asia-Pacific, Europe, and North America (χ²(2) = 2.81, p = 0.245). Variances were homogeneous (Levene’s p = 0.854).
+<img width="1182" height="936" alt="2df8fb44-08a4-4d30-bcb3-f4c131a384c9" src="https://github.com/user-attachments/assets/b9ac8d2f-cc1a-431a-90f7-da00e54ea2e5" />
+
+**Interpretation:** Geographic region alone does not significantly influence foot traffic volume.
+
+---
+
+### Region × Brand Interaction
+
+A two-way ANOVA on log-transformed footfall found:
+
+- No main effect of region (p = 0.711)
+- No main effect of brand (p = 0.859)
+- No significant interaction effect (p = 0.278)
+
+Tukey post-hoc comparisons showed no meaningful pairwise differences.
+<img width="1182" height="936" alt="f1fc6a14-b161-4920-9cd9-1b2a38b5c377" src="https://github.com/user-attachments/assets/fe6cd4c8-cbb1-4183-bcc5-41f29a9c59b4" />
+
+**Interpretation:** Footfall is not driven by geography, brand identity, or their interaction.
+
+---
+
+### Lease Length Comparison
+
+A Welch two-sample t-test comparing lease length days between Latin America and North America found no significant difference (t(821.8) = 1.02, p = 0.306).
+
+Mean lease duration:
+
+- Latin America: 46.2 days  
+- North America: 44.4 days  
+
+**Interpretation:** Lease strategies appear standardized across regions.
+
+---
+
+### Europe Units Sold vs Global Mean
+
+A one-sample z-test comparing Europe’s units sold to the overall mean found no significant difference (z = 0.43, p = 0.666).
+
+**Interpretation:** Europe’s performance aligns with global averages.
+
+---
+
+### Location Type × Event Format
+
+A Chi-square test of independence found no significant association between retail location type and event format (χ²(4) = 3.03, p = 0.552).
+
+**Interpretation:** Event deployment appears balanced across Airport Duty-Free, High-Street, and Luxury Mall environments.
+
+---
+
+### Regression Analysis
+
+#### Footfall → Sell-Through %
+
+Simple linear regression:
+
+- β = 0.0017  
+- p = 0.0036  
+- R² = 0.004  
+
+Footfall is statistically significant but explains less than 0.5% of sell-through variation.
+<img width="1182" height="936" alt="3e3d553c-2ef9-4394-89c6-1a3b9234f152" src="https://github.com/user-attachments/assets/3101527a-e091-4d08-ae9b-5b7e4a7419ca" />
+
+**Interpretation:** Higher traffic slightly improves sell-through, but the practical effect is minimal.
+
+---
+
+#### Lease Length → Sell-Through %
+
+Not statistically significant (p = 0.49).
+
+---
+
+#### Price + Footfall → Units Sold
+
+Multiple regression showed no significant predictors (p = 0.994, R² ≈ 0).
+
+---
+
+#### Full Model: Footfall + Lease Length + Price → Sell-Through
+
+Only footfall remained statistically significant (p = 0.0034), but overall explanatory power remained very small (R² = 0.0043).
+
+**Interpretation:** Operational variables explain minimal performance variation.
+
+---
+
+## Business Implications
+
+- Regional strategy adjustments alone are unlikely to improve KPI performance.
+- Brand presence does not significantly impact traffic volume.
+- Event type allocation is not structurally tied to retail environment.
+- Traffic increases conversion slightly, but not enough to meaningfully drive results.
+- Performance differences are likely influenced by execution quality, promotional strategy, product mix, or consumer behavior rather than structural categories.
+
+---
+
+## Repository Structure
+
+- `OneWayANOVA.R`
+- `TwoWayANOVA.R`
+- `TwoTailTTest.R`
+- `OneTailZTest.R`
+- `ChiSquare.R`
+- `LinearRegression.R`
+
+Each script includes assumption testing, statistical modeling, and/or visualization.
+
+---
+
+## Next Steps
+
+Future analysis could incorporate:
+
+- Marketing channel segmentation
+- Inventory allocation strategy
+- Promotional intensity
+- Nonlinear modeling approaches
+- Additional interaction effects beyond region and brand
