@@ -2,7 +2,7 @@
 
 ## Overview
 
-This project analyzes performance drivers of luxury beauty pop-up events using statistical testing and regression modeling in **R**. The dataset (synthetic, sourced from Kaggle) simulates 2025 KPI data across global regions, brands, retail environments, and event formats.
+This project investigates key performance drivers of luxury beauty pop-up events using hypothesis testing and regression analysis in **RStudio**. The synthetic Kaggle dataset represents 2025 KPIs across multiple regions, brands, and retail settings. After conducting data cleaning, exploratory data analysis, and summary pivot tables, formal statistical testing was performed. This repository focuses specifically on the statistical inference and modeling portion of the workflow.
 
 The objective was to determine whether structural factors (region, brand, location type, event format) or operational variables (footfall, lease length, price) meaningfully influence key outcomes such as:
 
