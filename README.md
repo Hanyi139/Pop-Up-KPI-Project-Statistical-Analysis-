@@ -29,6 +29,7 @@ Pop-up events are costly and operationally complex. This analysis explores:
   - Runs **Levene’s test** for variance equality
   - Uses **Kruskal-Wallis** (non-parametric alternative to one-way ANOVA)
   - Creates **boxplot** comparing footfall across regions
+<img width="950" height="760" alt="2df8fb44-08a4-4d30-bcb3-f4c131a384c9" src="https://github.com/user-attachments/assets/b9ac8d2f-cc1a-431a-90f7-da00e54ea2e5" />
 
 - `TwoWayANOVA.R`
   - Cleans brand encoding for **Estée Lauder**
