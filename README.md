@@ -34,7 +34,7 @@ Overall, structural variables do not appear to be primary drivers of KPI variati
 
 ## Skills Demonstrated
 
-- R programming (tidyverse, ggplot2, car)
+- R programming (tidyverse, dplyr, moments, ggplot2, car)
 - Assumption testing (Shapiro-Wilk, Levene’s Test)
 - Parametric and non-parametric hypothesis testing
 - One-sample Z-test
