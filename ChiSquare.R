@@ -1,5 +1,5 @@
-setwd("~/Desktop/MIS7700 Group 4 Project")
-data = read.csv("MIS7700 PopUp Cleaned Dataset.csv", head = TRUE, sep = ",")
+setwd("~/Desktop/Pop Up KPI Project")
+data = read.csv("Pop Up Cleaned Dataset.csv", head = TRUE, sep = ",")
 
 ###Creating factors for location and event type variables 
 data$location_type = as.factor(data$location_type)
