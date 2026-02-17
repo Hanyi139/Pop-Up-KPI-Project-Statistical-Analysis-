@@ -8,8 +8,8 @@ install.packages("moments")
 library(moments)
 
 ###Shapiro test on Europe sample units sold variable 
-setwd("~/Desktop/MIS7700 Group 4 Project")
-data = read.csv("MIS7700 PopUp Cleaned Dataset.csv", head = TRUE, sep = ",")
+setwd("~/Desktop/Pop Up KPI Project")
+data = read.csv("Pop Up Cleaned Dataset.csv", head = TRUE, sep = ",")
 eu_data = subset(data, data$region == "Europe")
 nrow(eu_data)
 shapiro.test(eu_data$units_sold)
