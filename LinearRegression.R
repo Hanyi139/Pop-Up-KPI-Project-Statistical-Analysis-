@@ -2,8 +2,8 @@ library(ggplot2)
 
 install.packages("car")
 library(car)
-setwd("~/Desktop/MIS7700 Group 4 Project")
-data = read.csv("MIS7700 PopUp Cleaned Dataset.csv", head = TRUE, sep = ",")
+setwd("~/Desktop/Pop Up KPI Project")
+data = read.csv("Pop Up Cleaned Dataset.csv", head = TRUE, sep = ",")
 
 ###Does average daily footfall predict sell through percentage?
 linmod = lm(sell_through_pct~avg_daily_footfall, data = data )
