@@ -160,19 +160,6 @@ Only footfall remained statistically significant (p = 0.0034), but overall expla
 
 ---
 
-## Repository Structure
-
-- `OneWayANOVA.R`
-- `TwoWayANOVA.R`
-- `TwoTailTTest.R`
-- `OneTailZTest.R`
-- `ChiSquare.R`
-- `LinearRegression.R`
-
-Each script includes assumption testing, statistical modeling, and/or visualization.
-
----
-
 ## Next Steps
 
 Future analysis could incorporate:
