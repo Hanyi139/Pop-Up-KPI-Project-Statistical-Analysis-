@@ -1,8 +1,8 @@
 library (dplyr)
 library(car)
 library(ggplot2)
-setwd("~/Desktop/MIS7700 Group 4 Project")
-data = read.csv("MIS7700 PopUp Cleaned Dataset.csv", head = TRUE, sep = ",")
+setwd("~/Desktop/Pop Up KPI Project")
+data = read.csv("Pop Up Cleaned Dataset.csv", head = TRUE, sep = ",")
 
 ###Creating subset with the 3 required regions 
 regions_data = subset(data, region %in% c("Asia-Pacific", "Europe", "North America"))
