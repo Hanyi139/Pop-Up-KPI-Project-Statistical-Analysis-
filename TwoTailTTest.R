@@ -1,6 +1,6 @@
 library(car)
-setwd("~/Desktop/MIS7700 Group 4 Project")
-data = read.csv("MIS7700 PopUp Cleaned Dataset.csv", head = TRUE, sep = ",")
+setwd("~/Desktop/Pop Up KPI Project")
+data = read.csv("Pop Up Cleaned Dataset.csv", head = TRUE, sep = ",")
 
 ###Shapiro tests on Latin America and North America samples lease length days variable 
 la_data = subset(data, data$region == "Latin America")
